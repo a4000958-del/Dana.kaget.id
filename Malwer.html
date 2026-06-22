@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISTEM TERRETAS</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #000;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: 'Courier New', Courier, monospace;
+            user-select: none;
+        }
+        /* Kontainer Utama Jumpscare (Disembunyikan di awal) */
+        #jumpscare-overlay {
+            display: none; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            /* GANTI URL DI BAWAH INI DENGAN LINK GAMBAR JUMPSCARE PILIHANMU */
+            background: url('images (2).jpeg') no-repeat center center;
+            background-size: cover;
+            z-index: 999;
+            animation: shake 0.1s infinite; /* Efek layar bergetar */
+        }
+        /* Kotak Menu Password */
+        .prank-box {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.85);
+            border: 3px solid #ff0000;
+            padding: 20px;
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 0 30px #ff0000;
+        }
+        h2 {
+            color: #ff0000;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 5px #000;
+        }
+        input[type="password"] {
+            background: #111;
+            border: 1px solid #ff0000;
+            color: #00ff00;
+            padding: 10px;
+            width: 80%;
+            text-align: center;
+            font-size: 1.2rem;
+            outline: none;
+            margin-bottom: 15px;
+        }
+        button {
+            background: #ff0000;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 80%;
+            box-shadow: 0 0 10px #ff0000;
+        }
+        button:hover {
+            background: #b30000;
+        }
+        /* Efek Getar Jumpscare */
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(0px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(2px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(2px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="scary-audio" loop>
+        <source src="1.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="jumpscare-overlay">
+        <div class="prank-box">
+            <h2>DEVICE LOCKED BY MALWARE</h2>
+            <input type="password" id="pw-input" placeholder="Masukkan Password (1029)..." autocomplete="off">
+            <button onclick="verifikasiPw()">UNLOCK DEVICE</button>
+        </div>
+    </div>
+
+    <script>
+        // Jalankan pop-up langsung saat halaman selesai dimuat
+        window.onload = function() {
+            setTimeout(function() {
+                alert("Perangkat anda telah di retas");
+                
+                // Setelah klik OK, jalankan jumpscare dan suara
+                nyalakanPrank();
+            }, 500); 
+        };
+
+        function nyalakanPrank() {
+            const overlay = document.getElementById('jumpscare-overlay');
+            const audio = document.getElementById('scary-audio');
+            
+            // Tampilkan background jumpscare
+            overlay.style.display = 'block';
+            
+            // Putar audio seram kencang-kencang
+            audio.volume = 1.0; 
+            audio.play().catch(err => {
+                console.log("Browser memblokir audio otomatis, perlu interaksi klik tambahan.");
+            });
+        }
+
+        function verifikasiPw() {
+            const inputVal = document.getElementById('pw-input').value;
+            const audio = document.getElementById('scary-audio');
+
+            if (inputVal === "1029") {
+                audio.pause(); // Matikan suara
+                alert("Password bener yahaha tolol");
+                
+                // Kembalikan layar jadi normal
+                document.body.innerHTML = "<h1 style='color:#00ff00; text-align:center; width:100%;'>Aman bro, cuma digoblokin!</h1>";
+                document.body.style.backgroundColor = "#fff";
+            } else {
+                alert("SALAH! DATA ANDA SEDANG DIHAPUS!");
+                document.getElementById('pw-input').value = "";
+            }
+        }
+
+        // Mencegah korban keluar tab dengan mudah di PC/Browser tertentu
+        window.onbeforeunload = function() {
+            return "Data sedang dihancurkan!";
+        };
+    </script>
+</body>
+</html>
